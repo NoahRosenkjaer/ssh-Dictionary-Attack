@@ -32,11 +32,11 @@ fi
 
 # Adds every line from username file
 while IFS= read -r line; do
-		if [[ "${username_arr[@]}" == "${line}" ]]; then
-			break
-		fi
-		username_arr+=("$line")
-	done < ${user_path}
+	if [[ "${username_arr[@]}" == "${line}" ]]; then
+		break
+	fi
+	username_arr+=("$line")
+done < ${user_path}
 
 # Adds every line from password file
 while IFS= read -r line; do
