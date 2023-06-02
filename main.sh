@@ -19,9 +19,13 @@ fi
 # Checks if arguents are used
 if [[ -z ${ip} ]]; then
 	read -p "What is the target ip? " ip
-elif [[ -z ${user_path} ]]; then
+fi
+
+if [[ -z ${user_path} ]]; then
 	read -p "Please provide a file with usernames (file path) " user_path
-elif [[ -z ${pass_path} ]]; then
+fi
+
+if [[ -z ${pass_path} ]]; then
 	read -p "Please provide a file with passwords (file path) " pass_path
 fi
 
